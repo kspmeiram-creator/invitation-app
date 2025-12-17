@@ -18,6 +18,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import com.example.invitationapp.ui.theme.InvitationAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -109,14 +111,31 @@ fun InvitationScreen() {
                 .padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            backgroundColors.forEach { color ->
+            backgroundColors.forEachIndexed { index, color ->
+                val colorName = when (index) {
+                    0 -> "White"
+                    1 -> "Misty Rose"
+                    2 -> "Light Cyan"
+                    3 -> "Light Yellow"
+                    4 -> "Light Green"
+                    5 -> "Light Purple"
+                    else -> "Color $index"
+                }
+                val isSelected = color == selectedBackground
                 Box(
                     modifier = Modifier
                         .size(60.dp)
+                        .semantics {
+                            contentDescription = if (isSelected) {
+                                "$colorName, selected"
+                            } else {
+                                "$colorName, not selected. Tap to select."
+                            }
+                        }
                         .background(color)
                         .border(
-                            width = if (color == selectedBackground) 4.dp else 2.dp,
-                            color = if (color == selectedBackground) Color.Blue else Color.Black
+                            width = if (isSelected) 4.dp else 2.dp,
+                            color = if (isSelected) Color.Blue else Color.Black
                         )
                         .clickable { selectedBackground = color }
                 )
@@ -125,7 +144,7 @@ fun InvitationScreen() {
     }
 }
 
-// Также полезно добавить предварительный просмотр
+// Preview for the invitation screen
 @Preview(showBackground = true)
 @Composable
 fun InvitationScreenPreview() {
