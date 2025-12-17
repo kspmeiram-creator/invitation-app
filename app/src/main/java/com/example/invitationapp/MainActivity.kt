@@ -33,6 +33,8 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+data class BackgroundOption(val color: Color, val name: String)
+
 @Composable
 fun InvitationScreen() {
     // State for editable text
@@ -45,7 +47,6 @@ fun InvitationScreen() {
     val textFieldBackgroundAlpha = 0.8f
     
     // Available background colors with names
-    data class BackgroundOption(val color: Color, val name: String)
     val backgroundColors = listOf(
         BackgroundOption(Color.White, "White"),
         BackgroundOption(Color(0xFFFFE4E1), "Misty Rose"),
