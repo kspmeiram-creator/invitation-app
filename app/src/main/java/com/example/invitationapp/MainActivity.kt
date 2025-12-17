@@ -57,8 +57,6 @@ fun InvitationScreen() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
-        Spacer(modifier = Modifier.height(20.dp))
-        
         // Title
         Text(
             text = "Invitation Editor",
@@ -97,8 +95,6 @@ fun InvitationScreen() {
                 }
             }
         )
-        
-        Spacer(modifier = Modifier.height(10.dp))
         
         // Background selection title
         Text(
