@@ -36,19 +36,23 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun InvitationScreen() {
     // State for editable text
-    var text by remember { mutableStateOf("Приглашение!") }
+    var text by remember { mutableStateOf("Invitation!") }
     
     // State for selected background
     var selectedBackground by remember { mutableStateOf(Color.White) }
     
-    // Available background colors
+    // Constants
+    val textFieldBackgroundAlpha = 0.8f
+    
+    // Available background colors with names
+    data class BackgroundOption(val color: Color, val name: String)
     val backgroundColors = listOf(
-        Color.White,
-        Color(0xFFFFE4E1),  // Misty Rose
-        Color(0xFFE0F7FA),  // Light Cyan
-        Color(0xFFFFF9C4),  // Light Yellow
-        Color(0xFFE8F5E9),  // Light Green
-        Color(0xFFF3E5F5)   // Light Purple
+        BackgroundOption(Color.White, "White"),
+        BackgroundOption(Color(0xFFFFE4E1), "Misty Rose"),
+        BackgroundOption(Color(0xFFE0F7FA), "Light Cyan"),
+        BackgroundOption(Color(0xFFFFF9C4), "Light Yellow"),
+        BackgroundOption(Color(0xFFE8F5E9), "Light Green"),
+        BackgroundOption(Color(0xFFF3E5F5), "Light Purple")
     )
     
     Column(
@@ -72,7 +76,7 @@ fun InvitationScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(Color.White.copy(alpha = 0.8f))
+                .background(Color.White.copy(alpha = textFieldBackgroundAlpha))
                 .border(2.dp, Color.Gray)
                 .padding(16.dp),
             textStyle = TextStyle(
@@ -111,33 +115,24 @@ fun InvitationScreen() {
                 .padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            backgroundColors.forEachIndexed { index, color ->
-                val colorName = when (index) {
-                    0 -> "White"
-                    1 -> "Misty Rose"
-                    2 -> "Light Cyan"
-                    3 -> "Light Yellow"
-                    4 -> "Light Green"
-                    5 -> "Light Purple"
-                    else -> "Color $index"
-                }
-                val isSelected = color == selectedBackground
+            backgroundColors.forEach { option ->
+                val isSelected = option.color == selectedBackground
                 Box(
                     modifier = Modifier
                         .size(60.dp)
                         .semantics {
                             contentDescription = if (isSelected) {
-                                "$colorName, selected"
+                                "${option.name}, selected"
                             } else {
-                                "$colorName, not selected. Tap to select."
+                                "${option.name}, not selected. Tap to select."
                             }
                         }
-                        .background(color)
+                        .background(option.color)
                         .border(
                             width = if (isSelected) 4.dp else 2.dp,
                             color = if (isSelected) Color.Blue else Color.Black
                         )
-                        .clickable { selectedBackground = color }
+                        .clickable { selectedBackground = option.color }
                 )
             }
         }
