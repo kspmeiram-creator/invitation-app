@@ -38,7 +38,7 @@ data class BackgroundOption(val color: Color, val name: String)
 @Composable
 fun InvitationScreen() {
     // State for editable text
-    var text by remember { mutableStateOf("Invitation!") }
+    var text by remember { mutableStateOf("Құрметті дос, сізді біздің кешімізге шақырамыз! Сағат 18:00-де келуді ұмытпаңыз.") }
     
     // State for selected background
     var selectedBackground by remember { mutableStateOf(Color.White) }
